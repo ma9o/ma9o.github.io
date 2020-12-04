@@ -1,18 +1,4 @@
-const vw = Math.max(
-  document.documentElement.clientWidth || 0,
-  window.innerWidth || 0
-);
-const vh = Math.max(
-  document.documentElement.clientHeight || 0,
-  window.innerHeight || 0
-);
-function shuffleArray(array) {
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
-  }
-}
-var imagesArray = [
+const imagesArray = [
   "https://images-na.ssl-images-amazon.com/images/I/811ZPN%2B7KML._AC_SL1500_.jpg",
   "https://upload.wikimedia.org/wikipedia/en/6/6a/Braidlogo.jpg",
   "https://upload.wikimedia.org/wikipedia/en/5/56/Age_of_Empires_II_-_The_Age_of_Kings_Coverart.png",
@@ -37,13 +23,49 @@ var imagesArray = [
   "https://m.media-amazon.com/images/I/41w52FCezEL._SY346_.jpg",
   "https://m.media-amazon.com/images/I/419eYPcjeaL._SY346_.jpg",
   "https://images-na.ssl-images-amazon.com/images/I/41zUeBe6NeL._SX331_BO1,204,203,200_.jpg",
+  "https://seeklogo.com/images/E/erlang-logo-025A1D4DFC-seeklogo.com.png",
+  "https://www.bitmat.it/wp-content/uploads/2014/07/Red-Hat.jpg",
+  "https://3u26hb1g25wn1xwo8g186fnd-wpengine.netdna-ssl.com/files/2019/06/mozilla-logo-bw-rgb-1024x293.png",
+  "https://e.snmc.io/i/300/s/fd8f5828efb56a9ef0d3d1d0523f2512/2317304",
+  "https://upload.wikimedia.org/wikipedia/commons/0/05/Ethereum_logo_2014.svg",
+  "https://e.snmc.io/i/300/s/05c3aaa99d8d855bb50f763450efd9e4/6902522",
+  "https://t2.genius.com/unsafe/1203x0/https%3A%2F%2Fimages.genius.com%2F7328b00fe1166bece35a926ede9974bd.1000x1000x1.jpg",
+  "https://e.snmc.io/i/300/s/9cbac30794b1949058d7843c000ce548/1921759",
+  "https://e.snmc.io/i/300/s/8531fa769eb42c16ca0efa5df54f9480/1934344",
+  "https://e.snmc.io/i/300/s/4fabfba87a1fe2bbe17d35cd8eb80931/1353614",
+  "https://e.snmc.io/i/300/s/a4f0a796a13bad6343a1e8bf97de3c59/2295231",
+  "https://e.snmc.io/i/300/s/f6b85186e76903b082546c0a3da5f719/4316688",
+  "https://e.snmc.io/i/300/s/0a32aabc1670258f8997c0448ff85a98/2161189",
+  "https://e.snmc.io/i/300/s/a96069f98816b4f959fc7975dde7af64/1335429",
+  "https://e.snmc.io/i/300/s/6e7119c95fe85a48fff1bbd03d887e6f/2405956",
+  "https://www.lifegate.it/app/uploads/stalker-stanza.jpg",
+  "https://upload.wikimedia.org/wikipedia/commons/a/a9/Alice%27s_Adventures_in_Wonderland_cover_%281865%29.jpg",
+  "https://www.mam-e.it/wp-content/uploads/2019/10/mame-arte-umberto-boccioni-e-larte-in-movimento2-1280x620.jpg",
+  "https://artinwords.de/wp-content/uploads/bosch-garten-der-lueste-versuchung-des-hl-antonius/Hieronymus-Bosch-Der-Garten-der-Lueste-lebensbrunnen-1024x506.jpg",
+  "https://upload.wikimedia.org/wikipedia/commons/c/cb/DIT-FFT-butterfly.png",
+  "https://mokuhankan.com/flea_market/images/Y022.jpg",
+  "https://upload.wikimedia.org/wikipedia/en/4/4c/LLVM_Logo.svg",
 ];
+
+const vw = Math.max(
+  document.documentElement.clientWidth || 0,
+  window.innerWidth || 0
+);
+const vh = Math.max(
+  document.documentElement.clientHeight || 0,
+  window.innerHeight || 0
+);
+
+function shuffleArray(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+}
 
 shuffleArray(imagesArray);
 
-console.log(imagesArray.length);
-
-var Engine = Matter.Engine,
+const Engine = Matter.Engine,
   Render = Matter.Render,
   Runner = Matter.Runner,
   Composites = Matter.Composites,
@@ -53,12 +75,10 @@ var Engine = Matter.Engine,
   World = Matter.World,
   Bodies = Matter.Bodies;
 
-// create engine
-var engine = Engine.create(),
+const engine = Engine.create(),
   world = engine.world;
 
-// create renderer
-var render = Render.create({
+const render = Render.create({
   element: document.body,
   engine: engine,
   options: {
@@ -69,14 +89,10 @@ var render = Render.create({
 });
 
 Render.run(render);
+Runner.run(Runner.create(), engine);
 
-// create runner
-var runner = Runner.create();
-Runner.run(runner, engine);
-
-const MAX_WIDTH = 120;
-
-const N_PER_ROW = 8;
+const MAX_WIDTH = vh / 8;
+const N_PER_ROW = 12;
 
 imagesArray.forEach((src, idx) => {
   const img = new Image();
@@ -104,16 +120,16 @@ imagesArray.forEach((src, idx) => {
   img.src = src;
 });
 
-var walls = [
+const walls = [
   Bodies.rectangle(vw / 2, 0, vw, 50, { isStatic: true }),
   Bodies.rectangle(vw / 2, vh, vw, 50, { isStatic: true }),
   Bodies.rectangle(vw, vh / 2, 50, vh, { isStatic: true }),
   Bodies.rectangle(0, vh / 2, 50, vh, { isStatic: true }),
 ];
+
 World.add(world, walls);
 
-// add mouse control
-var mouse = Mouse.create(render.canvas),
+const mouse = Mouse.create(render.canvas),
   mouseConstraint = MouseConstraint.create(engine, {
     mouse: mouse,
     constraint: {
@@ -126,10 +142,8 @@ var mouse = Mouse.create(render.canvas),
 
 World.add(world, mouseConstraint);
 
-// keep the mouse in sync with rendering
 render.mouse = mouse;
 
-// fit the render viewport to the scene
 Render.lookAt(render, {
   min: { x: 0, y: 0 },
   max: { x: vw, y: vh },
